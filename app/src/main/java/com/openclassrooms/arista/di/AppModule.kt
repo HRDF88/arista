@@ -1,5 +1,6 @@
 package com.openclassrooms.arista.di
 
+import com.openclassrooms.arista.data.dao.ExerciseDtoDao
 import com.openclassrooms.arista.data.repository.ExerciseRepository
 import com.openclassrooms.arista.data.repository.SleepRepository
 import com.openclassrooms.arista.data.repository.UserRepository
@@ -26,7 +27,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideExerciseRepository(): ExerciseRepository {
-        return ExerciseRepository()
+    fun provideExerciseRepository(exerciseDtoDao: ExerciseDtoDao): ExerciseRepository {
+        return ExerciseRepository(exerciseDtoDao)
     }
 }

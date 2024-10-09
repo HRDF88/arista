@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
 interface DeleteExerciseInterface {
-    fun deleteExercise(exercise: Exercise?)
+    suspend fun deleteExercise(exercise: Exercise?)
 }
 
 @AndroidEntryPoint
@@ -48,6 +48,10 @@ class ExerciseFragment : Fragment(), DeleteExerciseInterface {
         setupRecyclerView()
         setupFab()
         observeExercises()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.loadAllExercises()
+        }
     }
 
     private fun setupRecyclerView() {
@@ -70,11 +74,17 @@ class ExerciseFragment : Fragment(), DeleteExerciseInterface {
 
     private fun showAddExerciseDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_exercise, null)
-        setupDialogViews(dialogView).also {
+        val views = setupDialogViews(dialogView)
+
+        lifecycleScope.launch {
             AlertDialog.Builder(requireContext())
                 .setView(dialogView)
                 .setTitle(R.string.add_new_exercise)
-                .setPositiveButton(R.string.add) { _, _ -> addExercise(it) }
+                .setPositiveButton(R.string.add) { _, _ ->
+                    lifecycleScope.launch {
+                        addExercise(views)
+                    }
+                }
                 .setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
                 .show()
         }
@@ -95,7 +105,7 @@ class ExerciseFragment : Fragment(), DeleteExerciseInterface {
         return Triple(durationEditText, categorySpinner, intensityEditText)
     }
 
-    private fun addExercise(views: Triple<EditText, Spinner, EditText>) {
+    private suspend fun addExercise(views: Triple<EditText, Spinner, EditText>) {
         val (durationEditText, categorySpinner, intensityEditText) = views
 
         val durationStr = durationEditText.text.toString().trim()
@@ -157,7 +167,7 @@ class ExerciseFragment : Fragment(), DeleteExerciseInterface {
         _binding = null
     }
 
-    override fun deleteExercise(exercise: Exercise?) {
+    override suspend fun deleteExercise(exercise: Exercise?) {
         exercise?.let { viewModel.deleteExercise(it) }
     }
 }
