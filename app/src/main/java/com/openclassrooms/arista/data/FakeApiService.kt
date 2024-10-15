@@ -5,19 +5,18 @@ import com.openclassrooms.arista.domain.model.ExerciseCategory
 import com.openclassrooms.arista.domain.model.Sleep
 import com.openclassrooms.arista.domain.model.User
 import java.time.LocalDateTime
-import java.util.Arrays
-import java.util.Optional
 
 class FakeApiService {
-
+    /*
     // Static data
-    var user: User = User("John Doe", "johndoe@example.com")
+    var user: User = User("John Doe", "johndoe@example.com",1,"1234")
+        //userDto.id, userDto.password)
 
-    private val sleepData = listOf(
-        Sleep(LocalDateTime.now().minusDays(1), 7, 8),
-        Sleep(LocalDateTime.now().minusDays(2), 6, 5),
-        Sleep(LocalDateTime.now().minusDays(3), 8, 9)
-    )
+  //  private val sleepData = listOf(
+      //  Sleep(LocalDateTime.now().minusDays(1), 7, 8),
+       // Sleep(LocalDateTime.now().minusDays(2), 6, 5),
+       // Sleep(LocalDateTime.now().minusDays(3), 8, 9)
+    //)
 
     private val exerciseData = mutableListOf(
         Exercise(1, LocalDateTime.now().minusHours(5), 30, ExerciseCategory.Running, 7),
@@ -53,4 +52,6 @@ class FakeApiService {
     fun deleteExercise(exercise: Exercise) {
         exerciseData.remove(exercise)
     }
+}
+*/
 }

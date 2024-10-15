@@ -1,15 +1,19 @@
 package com.openclassrooms.arista.data.repository
 
-import com.openclassrooms.arista.data.FakeApiService
-import com.openclassrooms.arista.domain.model.User
+import com.openclassrooms.arista.data.dao.UserDtoDao
+import com.openclassrooms.arista.data.entity.UserDto
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class UserRepository(private val apiService: FakeApiService = FakeApiService()) {
+class UserRepository @Inject constructor(private val userDao: UserDtoDao) {
 
-    // Get the current user
-    var user: User
-        get() = apiService.user
-        // Set or update the user
-        set(user) {
-            apiService.user = user
+    val user: Flow<List<UserDto>> = flow {
+         withContext(Dispatchers.IO) {
+             userDao.getAllUser()
         }
+    }
 }
+

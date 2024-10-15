@@ -1,7 +1,6 @@
 package com.openclassrooms.arista.data.dataBase
 
 import androidx.room.TypeConverter
-import java.security.Timestamp
 import java.time.Instant
 import java.time.LocalDateTime
 import java.util.TimeZone
