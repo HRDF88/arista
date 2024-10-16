@@ -21,6 +21,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
+/**
+ * A Fragment for displaying and managing exercises in the UI.
+ */
 interface DeleteExerciseInterface {
     suspend fun deleteExercise(exercise: Exercise?)
 }
@@ -34,6 +37,10 @@ class ExerciseFragment : Fragment(), DeleteExerciseInterface {
     private val viewModel: ExerciseViewModel by viewModels()
     private lateinit var exerciseAdapter: ExerciseAdapter
 
+    /**
+     * Creates the view for the fragment.
+     * Sets up the RecyclerView, FloatingActionButton, and observes the exercises.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,6 +50,9 @@ class ExerciseFragment : Fragment(), DeleteExerciseInterface {
         return binding.root
     }
 
+    /**
+     * Perform additional actions on the fragment view once it is created.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
@@ -52,14 +62,29 @@ class ExerciseFragment : Fragment(), DeleteExerciseInterface {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.loadAllExercises()
         }
+        // Handling the database data recovery error
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiState.collect { uiState ->
+                if (uiState.error.isNotBlank()) {
+                    Toast.makeText(requireContext(), uiState.error, Toast.LENGTH_LONG).show()
+                    viewModel.updateErrorState("")
+                }
+            }
+        }
     }
 
+    /**
+     * Setup Recycler View to display the exercises.
+     */
     private fun setupRecyclerView() {
         exerciseAdapter = ExerciseAdapter(this)
         binding.exerciseRecyclerview.layoutManager = LinearLayoutManager(context)
         binding.exerciseRecyclerview.adapter = exerciseAdapter
     }
 
+    /**
+     * Observe List of exercises to update display recycler view
+     */
     private fun observeExercises() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.exercisesFlow.collect { exercises ->
@@ -68,6 +93,10 @@ class ExerciseFragment : Fragment(), DeleteExerciseInterface {
         }
     }
 
+    /**
+     * Sets up the FloatingActionButton and its click listener.
+     *
+     **/
     private fun setupFab() {
         binding.fab.setOnClickListener { showAddExerciseDialog() }
     }
@@ -88,8 +117,23 @@ class ExerciseFragment : Fragment(), DeleteExerciseInterface {
                 .setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
                 .show()
         }
+        // Handling the database data recovery error
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiState.collect { uiState ->
+                if (uiState.error.isNotBlank()) {
+                    Toast.makeText(requireContext(), uiState.error, Toast.LENGTH_LONG).show()
+                    viewModel.updateErrorState("")
+                }
+            }
+        }
     }
 
+    /**
+     * Sets up the views inside the add exercise dialog.
+     *
+     * @param dialogView The view of the add exercise dialog.
+     * @return A Triple object containing the EditText for duration, Spinner for category, and EditText for intensity.
+     */
     private fun setupDialogViews(dialogView: View): Triple<EditText, Spinner, EditText> {
         val durationEditText = dialogView.findViewById<EditText>(R.id.durationEditText)
         val categorySpinner = dialogView.findViewById<Spinner>(R.id.categorySpinner).apply {
@@ -105,6 +149,11 @@ class ExerciseFragment : Fragment(), DeleteExerciseInterface {
         return Triple(durationEditText, categorySpinner, intensityEditText)
     }
 
+    /**
+     * Adds a new exercise to the database.
+     *
+     * @param views A Triple object containing the EditText for duration, Spinner for category, and EditText for intensity.
+     */
     private suspend fun addExercise(views: Triple<EditText, Spinner, EditText>) {
         val (durationEditText, categorySpinner, intensityEditText) = views
 
@@ -123,8 +172,24 @@ class ExerciseFragment : Fragment(), DeleteExerciseInterface {
         val newExercise =
             Exercise(System.currentTimeMillis(), LocalDateTime.now(), duration, category, intensity)
         viewModel.addNewExercise(newExercise)
+
+        // Handling the database data recovery error
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiState.collect { uiState ->
+                if (uiState.error.isNotBlank()) {
+                    Toast.makeText(requireContext(), uiState.error, Toast.LENGTH_LONG).show()
+                    viewModel.updateErrorState("")
+                }
+            }
+        }
     }
 
+    /**
+     * Validates the duration input.
+     *
+     * @param duration The duration input as a string.
+     * @return true if the duration is valid, false otherwise.
+     */
     private fun validateDuration(duration: String): Boolean {
         if (duration.isBlank()) {
             Toast.makeText(requireContext(), R.string.fill_all_fields, Toast.LENGTH_SHORT).show()
@@ -133,6 +198,12 @@ class ExerciseFragment : Fragment(), DeleteExerciseInterface {
         return true
     }
 
+    /**
+     * Validates the intensity input.
+     *
+     * @param intensity The intensity input as a string.
+     * @return true if the intensity is valid, false otherwise.
+     */
     private fun validateIntensity(intensity: String): Boolean {
         if (intensity.isBlank()) {
             Toast.makeText(requireContext(), R.string.fill_all_fields, Toast.LENGTH_SHORT).show()
@@ -161,13 +232,30 @@ class ExerciseFragment : Fragment(), DeleteExerciseInterface {
         }
     }
 
-
+    /**
+     * Called when the fragment's view is destroyed. Cleans up resources and avoids memory leaks.
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
+    /**
+     * Deletes an exercise from the database.
+     *
+     * @param exercise The exercise to be deleted.
+     */
     override suspend fun deleteExercise(exercise: Exercise?) {
         exercise?.let { viewModel.deleteExercise(it) }
+
+        // Handling the database data recovery error
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiState.collect { uiState ->
+                if (uiState.error.isNotBlank()) {
+                    Toast.makeText(requireContext(), uiState.error, Toast.LENGTH_LONG).show()
+                    viewModel.updateErrorState("")
+                }
+            }
+        }
     }
 }

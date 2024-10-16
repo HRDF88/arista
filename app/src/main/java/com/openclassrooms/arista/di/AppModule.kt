@@ -18,6 +18,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import javax.inject.Singleton
 
+/**
+ * AppModule for Hilt (Dependency Injection)
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule {

@@ -16,6 +16,11 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.time.format.DateTimeFormatter
 
+/**
+ * Adapter class for displaying a list of exercises in a RecyclerView.
+ *
+ * @param context The context implementing the DeleteExerciseInterface.
+ */
 class ExerciseAdapter(private val context: DeleteExerciseInterface) :
     ListAdapter<Exercise, ExerciseViewHolder>(
         DIFF_CALLBACK
@@ -42,6 +47,11 @@ class ExerciseAdapter(private val context: DeleteExerciseInterface) :
         }
     }
 
+    /**
+     * ViewHolder class for an exercise item in the RecyclerView.
+     *
+     * @param itemView The view for the exercise item.
+     */
     inner class ExerciseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tvStartTime: TextView
         var tvDuration: TextView

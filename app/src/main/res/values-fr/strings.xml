@@ -19,4 +19,8 @@
     <string name="add">Ajouter</string>
     <string name="cancel">Annuler</string>
     <string name="fill_all_fields">Remplissez tous les champs</string>
+    <string name="error">Erreur lors de la recupération des données.</string>
+    <string name="error_delete_exercise">Erreur lors de la supression de l exercice.</string>
+    <string name="error_load_exercise">Erreur lors du chargement des exercices.</string>
+    <string name="error_add_exercise">Erreur lors de l ajout de l exercice.</string>
 </resources>

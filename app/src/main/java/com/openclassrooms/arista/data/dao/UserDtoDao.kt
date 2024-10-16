@@ -6,6 +6,10 @@ import androidx.room.Query
 import com.openclassrooms.arista.data.entity.UserDto
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Data Access Object (DAO) interface for managing UserDto data in the local database.
+ *
+ */
 @Dao
 interface UserDtoDao {
     @Insert

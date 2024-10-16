@@ -6,6 +6,10 @@ import androidx.room.Query
 import com.openclassrooms.arista.data.entity.SleepDto
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Data Access Object (DAO) interface for managing SleepDto data in the local database.
+ *
+ */
 @Dao
 interface SleepDtoDao {
     @Insert

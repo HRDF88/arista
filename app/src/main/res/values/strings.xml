@@ -18,5 +18,9 @@
     <string name="add">Add</string>
     <string name="cancel">Cancel</string>
     <string name="fill_all_fields">Please fill all fields.</string>
+    <string name="error">Error while retrieving data.</string>
+    <string name="error_delete_exercise">Error when deleting the exercise.</string>
+    <string name="error_load_exercise">Error loading exercises.</string>
+    <string name="error_add_exercise">Error adding exercise.</string>
 
 </resources>

@@ -3,6 +3,15 @@ package com.openclassrooms.arista.domain.model
 import com.openclassrooms.arista.data.entity.ExerciseDto
 import java.time.LocalDateTime
 
+/**
+ * Data class representing an exercise.
+ *
+ * @property id The unique identifier of the exercise.
+ * @property startTime The start time of the exercise.
+ * @property duration The duration of the exercise in minutes.
+ * @property category The category of the exercise.
+ * @property intensity The intensity level of the exercise.
+ */
 data class Exercise(
     val id: Long? = null,
     var startTime: LocalDateTime,

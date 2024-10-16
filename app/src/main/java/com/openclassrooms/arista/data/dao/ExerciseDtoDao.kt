@@ -4,11 +4,12 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.openclassrooms.arista.data.entity.ExerciseDto
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Data Access Object (DAO) interface for managing ExerciseDto data in the local database.
+ *
+ */
 @Dao
 interface ExerciseDtoDao {
     @Insert

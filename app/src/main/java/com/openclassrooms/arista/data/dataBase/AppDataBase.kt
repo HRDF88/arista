@@ -17,13 +17,22 @@ import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
+/**
+ * Database class that extends RoomDatabase and represents the local database for the application.
+ * This class defines the entities, version, and type converters used by the database.
+ * It also provides DAO (Data Access Object) methods for accessing the specific entity tables.
+ *
+ * @property userDtoDao The DAO for accessing UserDto data.
+ * @property sleepDtoDao The DAO for accessing SleepDto data.
+ * @property exerciseDtoDao The DAO for accessing ExerciseDto data.
+ */
 @Database(
     entities = [UserDto::class, SleepDto::class, ExerciseDto::class],
     version = 1,
     exportSchema = false
 )
 @TypeConverters(RoomTypeConverters::class)
-abstract class AppDatabase:  RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract fun userDtoDao(): UserDtoDao
     abstract fun sleepDtoDao(): SleepDtoDao
     abstract fun exerciseDtoDao(): ExerciseDtoDao
@@ -77,7 +86,7 @@ abstract class AppDatabase:  RoomDatabase() {
                 )
             )
             userDtoDao.insertUser(
-                UserDto(Name = "John Doe", email = "johndoe@example.com", password = "1234abcd")
+                UserDto(name = "John Doe", email = "johndoe@example.com", password = "1234abcd")
             )
         }
     }

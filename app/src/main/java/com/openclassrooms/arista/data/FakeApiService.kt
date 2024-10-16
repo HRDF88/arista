@@ -6,6 +6,9 @@ import com.openclassrooms.arista.domain.model.Sleep
 import com.openclassrooms.arista.domain.model.User
 import java.time.LocalDateTime
 
+/**
+ * NEVER USED!
+ */
 class FakeApiService {
     /*
     // Static data
