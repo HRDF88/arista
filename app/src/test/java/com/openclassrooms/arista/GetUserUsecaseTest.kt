@@ -40,10 +40,10 @@ class GetUserUsecaseTest {
                     password = "lapatate"
                 )
             )
-            Mockito.`when`(userRepository.user).thenReturn(flowOf(userList))
+            Mockito.`when`(userRepository.getUserById(1)).thenReturn(expectedUser)
 
             // Act
-            val result = getUserUsecase.execute().first()
+            val result = getUserUsecase.execute()
 
             // Assert
             assertEquals(expectedUser, result)
