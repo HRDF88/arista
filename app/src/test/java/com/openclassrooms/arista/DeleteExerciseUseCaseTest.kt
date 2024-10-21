@@ -23,14 +23,21 @@ class DeleteExerciseUseCaseTest {
     }
 
     @Test
-    fun `when execute is called, should call deleteExercise in exercise repository`() = runBlocking {
-        // Arrange
-        val exercise = Exercise(1, startTime = LocalDateTime.of(2024, Month.OCTOBER, 10, 7, 24),15,ExerciseCategory.Swimming,5)
+    fun `when execute is called, should call deleteExercise in exercise repository`() =
+        runBlocking {
+            // Arrange
+            val exercise = Exercise(
+                1,
+                startTime = LocalDateTime.of(2024, Month.OCTOBER, 10, 7, 24),
+                15,
+                ExerciseCategory.Swimming,
+                5
+            )
 
-        // Act
-        deleteExerciseUseCase.execute(exercise)
+            // Act
+            deleteExerciseUseCase.execute(exercise)
 
-        // Assert
-        verify(exerciseRepository, times(1)).deleteExercise(exercise)
-    }
+            // Assert
+            verify(exerciseRepository, times(1)).deleteExercise(exercise)
+        }
 }

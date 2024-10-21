@@ -1,6 +1,6 @@
 package com.openclassrooms.arista.domain.usecase
 
-import com.openclassrooms.arista.data.repository.SleepRepository
+import com.openclassrooms.arista.data.repositoryInterface.SleepRepositoryInterface
 import com.openclassrooms.arista.domain.model.Sleep
 import javax.inject.Inject
 
@@ -9,10 +9,10 @@ import javax.inject.Inject
  * This UseCase decouples and isolates the retrieval logic from the ViewModel, following the principles
  * of Clean Architecture.
  *
- * @param sleepRepository The repository that provides access to Sleep data.
+ * @param sleepRepositoryInterface The interface of repository that provides access to Sleep data.
  */
-class GetAllSleepsUseCase @Inject constructor(private val sleepRepository: SleepRepository) {
+class GetAllSleepsUseCase @Inject constructor(private val sleepRepositoryInterface: SleepRepositoryInterface) {
     suspend fun execute(): List<Sleep> {
-        return sleepRepository.getAllSleep()
+        return sleepRepositoryInterface.getAllSleep()
     }
 }

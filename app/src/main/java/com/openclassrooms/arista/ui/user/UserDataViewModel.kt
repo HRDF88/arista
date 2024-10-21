@@ -12,7 +12,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -68,10 +67,10 @@ class UserDataViewModel @Inject constructor(private val getUserUsecase: GetUserU
     /**
      *  Loads the user data from the repository and updates.
      */
-    private fun loadUserData() {
+    private fun loadUserData() { //ultimately do with the real id of the user.
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val userDto = getUserUsecase.execute().firstOrNull()
+                val userDto = getUserUsecase.execute()
                 val user = userDto?.let { dto ->
                     User(
                         name = dto.name,

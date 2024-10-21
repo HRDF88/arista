@@ -1,26 +1,26 @@
 package com.openclassrooms.arista.domain.usecase
 
-import com.openclassrooms.arista.data.entity.UserDto
-import com.openclassrooms.arista.data.repository.UserRepository
+import com.openclassrooms.arista.data.repositoryInterface.UserRepositoryInterface
 import com.openclassrooms.arista.domain.model.User
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 /**
- * Use case class for getting a user from the UserRepository.
+ * Use case class for getting a user from the UserRepositoryInterface.
  *
- * @param userRepository The UserRepository implementation.
+ * @param userRepositoryInterface The UserRepository implementation.
  */
-class GetUserUsecase @Inject constructor(private val userRepository: UserRepository) {
+class GetUserUsecase @Inject constructor(private val userRepositoryInterface: UserRepositoryInterface) {
     /**
      * Executes the use case and returns a Flow of User.
      *
      * @return A Flow emitting the User object.
      */
-    fun execute(): Flow<User> {
-        return userRepository.user.map { userList ->
-            userList.first()
-        }
+    suspend fun execute(): User? {
+        return userRepositoryInterface.getUserById(getFirstUserId())
+    }
+
+    private fun getFirstUserId(): Long {
+        // Code to retrieve the first user ID from the database
+        return 1 // Replace this with the actual code to retrieve the ID from the database
     }
 }

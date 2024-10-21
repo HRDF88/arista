@@ -20,7 +20,6 @@ data class Exercise(
     var intensity: Int,
 ) {
 
-
     fun toDto(): ExerciseDto {
         return ExerciseDto(
             id = this.id,
@@ -30,5 +29,21 @@ data class Exercise(
             intensity = this.intensity
         )
     }
-
+    companion object {
+        /**
+         * Creates a Exercise object from a ExerciseDto object.
+         *
+         * @param exerciseDto The SleepDto object to convert.
+         * @return A Exercise object with data mapped from the ExerciseDto object.
+         */
+        fun fromDto(exerciseDto: ExerciseDto): Exercise {
+            return Exercise(
+                id = exerciseDto.id,
+                startTime = exerciseDto.startTime,
+                duration = exerciseDto.duration,
+                category = exerciseDto.category,
+                intensity = exerciseDto.intensity
+            )
+        }
+    }
 }
